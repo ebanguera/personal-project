@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Esta pagina es realizada con el fin de crear una base de datos en excel para poder llevar las casas que ya hemos visto">
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="dark_web.css">
+        <title>Formulario</title>
+    </head>
+    <body>
+        <label id="switch">
+            <input type="checkbox">
+            <span class="slider round"></span>
+        </label>
+        <div class="container">
+            
+
+            <form action="" name="formulario">
+                <div class="form-group">
+                    <label for="direccion">Direccion</label>
+                    <input type="text" name="Direccion">
+                </div>
+                
+                <div class="form-group">
+                    <label for="telefono">Telefono</label>
+                    <input type="text" name="Telefono">
+                </div>
+
+                <div class="form-group">
+                    <label for="precio">Precio</label>
+                    <input type="text" name="Precio">
+                </div>
+
+                <div class="form-group">
+                    <label for="area">Area(m<sup>2</sup>)</label>
+                    <input type="text" name="Area">
+                </div>
+
+                <div class="form-group">
+                    <label for="garaje">Garaje</label>
+                    <select name="Garaje" id="">
+                        <option value="" selected hidden>Seleccione opción</option>
+                        <option value="Sí">Si</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="pisos">Pisos</label>
+                    <input type="text" name="Pisos">
+                </div>
+
+                <div class="form-group">
+                    <label for="habitaciones">Habitaciones</label>
+                    <input type="text" name="Habitaciones">
+                </div>
+
+                <div class="form-group">
+                    <label for="acabados">Acabados</label>
+                    <select name="Acabados" id="">
+                        <option value="" selected hidden>¿Necesita arreglos?</option>
+                        <option value="Sí">Si</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="negocio">Negocio</label>
+                    <select name="Negocio" id="">
+                        <option value="" selected hidden>¿Se puede arrendar?</option>
+                        <option value="Sí">Si</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="papeles">Papeles</label>
+                    <select name="Papeles" id="">
+                        <option value="" selected hidden>¿Tiene papeles?</option>
+                        <option value="Sí">Si</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="antigüedad">Antigüedad (años)</label>
+                    <input type="text" name="Antigüedad">
+                </div>
+
+                <div class="form-group">
+                    <label for="estrato">Estrato</label>
+                    <select name="Estrato" id="">
+                        <option value="" selected hidden>Estrato</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5+">5+</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="recibos">Aproximado de los recibos</label>
+                    <input type="text" name="Recibos">
+                </div>
+
+                <div class="form-group">
+                    <label for="formas">Formas de pago</label>
+                    <input type="text" name="Formas">
+                </div>
+
+                <div class="form-group">
+                    <label for="pago">Tiempo de pago</label>
+                    <input type="text" name="Pago">
+                </div>
+
+                <div class="form-group">
+                    <label for="comentarios">Comentarios</label>
+                    <textarea name="Comentarios" placeholder="Agregue demás datos" rows="5" style="resize: none;"></textarea>
+                </div>
+
+                <button type="submit" class="btn-submit" onclick="window.modal.showModal();">Guardar</button>
+
+            </form>
+
+            <dialog id="modal">
+                <h2>¡Completado!</h2>
+                <button onclick="window.modal.close();">Cerrar</button>
+            </dialog>
+
+        </div>
+
+        <script>
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbwKisVnAZDpUHVShEhmdAgCQIDy07Wa5e3ZrEcHQoM7yDGWys7CSBB27En3MOcUSnmxAg/exec'
+            const form = document.forms['formulario']
+            const popup = document.querySelector("#popup")
+
+            form.addEventListener('submit', e => {
+                e.preventDefault()
+                fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+                    .then(response =>{ 
+                        form.reset()
+                        popup.showModal()
+                        // console.log('Success!', response)
+                    })
+                    .catch(error => console.error('Error!', error.message))
+            })
+
+
+            const colorSwitch = document.querySelector('#switch input[type="checkbox"]');
+            function cambiaTema(ev){
+                if(ev.target.checked){
+                    document.documentElement.setAttribute('tema', 'light');
+                } else {
+                    document.documentElement.setAttribute('tema', 'dark');
+                }
+            }
+            colorSwitch.addEventListener('change', cambiaTema);
+        </script>
+
+    </body>
+</html>
